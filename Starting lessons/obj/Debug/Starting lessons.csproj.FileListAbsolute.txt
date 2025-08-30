@@ -1,0 +1,8 @@
+D:\C# projects\Starting lessons\Starting lessons\obj\Debug\Starting lessons.csproj.AssemblyReference.cache
+D:\C# projects\Starting lessons\Starting lessons\obj\Debug\Starting lessons.csproj.CoreCompileInputs.cache
+D:\C# projects\Starting lessons\Starting lessons\bin\Debug\Starting lessons.exe.config
+D:\C# projects\Starting lessons\Starting lessons\bin\Debug\Starting lessons.exe
+D:\C# projects\Starting lessons\Starting lessons\bin\Debug\Starting lessons.pdb
+D:\C# projects\Starting lessons\Starting lessons\obj\Debug\Starting lessons.exe
+D:\C# projects\Starting lessons\Starting lessons\obj\Debug\Starting lessons.pdb
+D:\C# projects\Starting lessons\Starting lessons\obj\Debug\Starting lessons.exe.config
