@@ -6,3 +6,11 @@ D:\C# projects\Starting lessons\Starting lessons\bin\Debug\Starting lessons.pdb
 D:\C# projects\Starting lessons\Starting lessons\obj\Debug\Starting lessons.exe
 D:\C# projects\Starting lessons\Starting lessons\obj\Debug\Starting lessons.pdb
 D:\C# projects\Starting lessons\Starting lessons\obj\Debug\Starting lessons.exe.config
+C:\Users\Vadim\Documents\GitHub\littleBitCSharp\Starting lessons\bin\Debug\Starting lessons.exe.config
+C:\Users\Vadim\Documents\GitHub\littleBitCSharp\Starting lessons\bin\Debug\Starting lessons.exe
+C:\Users\Vadim\Documents\GitHub\littleBitCSharp\Starting lessons\bin\Debug\Starting lessons.pdb
+C:\Users\Vadim\Documents\GitHub\littleBitCSharp\Starting lessons\obj\Debug\Starting lessons.csproj.AssemblyReference.cache
+C:\Users\Vadim\Documents\GitHub\littleBitCSharp\Starting lessons\obj\Debug\Starting lessons.exe.config
+C:\Users\Vadim\Documents\GitHub\littleBitCSharp\Starting lessons\obj\Debug\Starting lessons.csproj.CoreCompileInputs.cache
+C:\Users\Vadim\Documents\GitHub\littleBitCSharp\Starting lessons\obj\Debug\Starting lessons.exe
+C:\Users\Vadim\Documents\GitHub\littleBitCSharp\Starting lessons\obj\Debug\Starting lessons.pdb

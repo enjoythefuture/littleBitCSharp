@@ -91,6 +91,7 @@ namespace Starting_lessons
             string result = number % 2 == 0 ? "Even" : "Odd";
 
             Console.WriteLine(result);
+            Console.ReadKey();
         }
     }
 }
