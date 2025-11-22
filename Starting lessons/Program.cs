@@ -84,14 +84,38 @@ namespace Starting_lessons
             #endregion
 
 
-            //Продемонстрируем магию тернарного оператора
+            #region Ternary operator
+            /*//Продемонстрируем магию тернарного оператора
             int number = 3;
 
             // Переменная = условие? значение при истине : значение при лжи
             string result = number % 2 == 0 ? "Even" : "Odd";
 
             Console.WriteLine(result);
+            Console.ReadKey();*/
+            #endregion
+
+            #region Console customization
+            // Делаем консоль красивой  
+
+            // Добавляем кодировку UTF8, чтобы отображались все символы
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.InputEncoding = System.Text.Encoding.UTF8;
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Проверка на четность с помощью тернарного оператора");
+
+            int number = 3;
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            // Переменная = условие? значение при истине : значение при лжи
+            string result = number % 2 == 0 ? "Even" : "Odd";
+
+            Console.WriteLine(result);
             Console.ReadKey();
+
+            #endregion
         }
     }
 }
