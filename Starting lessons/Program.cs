@@ -102,18 +102,31 @@ namespace Starting_lessons
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
 
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Проверка на четность с помощью тернарного оператора");
-
-            int number = 3;
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Введите целое число с клавиатуры");
+            int number = int.Parse(Console.ReadLine());
 
             Console.ForegroundColor = ConsoleColor.Yellow;
 
             // Переменная = условие? значение при истине : значение при лжи
             string result = number % 2 == 0 ? "Even" : "Odd";
 
-            Console.WriteLine(result);
-            Console.ReadKey();
+            if (result == "Even"){
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine(result);
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.WriteLine(result);
+                Console.ReadKey();
+            }
+
+            //Console.WriteLine(result);
+            //Console.ReadKey();
 
             #endregion
         }
