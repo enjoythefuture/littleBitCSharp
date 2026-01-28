@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Starting_lessons
 {
+
     internal class Program
     {
         static void Main(string[] args)
@@ -96,39 +97,65 @@ namespace Starting_lessons
             #endregion
 
             #region Console customization
-            // Делаем консоль красивой  
+            //// Делаем консоль красивой  
 
-            // Добавляем кодировку UTF8, чтобы отображались все символы
+            //// Добавляем кодировку UTF8, чтобы отображались все символы
+
+            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+            //Console.WriteLine("Проверка на четность с помощью тернарного оператора");
+            //Console.ForegroundColor = ConsoleColor.Green;
+            //Console.WriteLine("Введите целое число с клавиатуры");
+            //int number = int.Parse(Console.ReadLine());
+
+            //Console.ForegroundColor = ConsoleColor.Yellow;
+
+            //// Переменная = условие? значение при истине : значение при лжи
+            //string result = number % 2 == 0 ? "Even" : "Odd";
+
+            //if (result == "Even"){
+            //    Console.ForegroundColor = ConsoleColor.DarkCyan;
+            //    Console.WriteLine(result);
+            //    Console.ReadKey();
+            //}
+            //else
+            //{
+            //    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            //    Console.WriteLine(result);
+            //    Console.ReadKey();
+            //}
+
+            ////Console.WriteLine(result);
+            ////Console.ReadKey();
+
+            #endregion
+
+            #region Loops   
+
+            //While - папа всех циклов
+
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
 
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Проверка на четность с помощью тернарного оператора");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Введите целое число с клавиатуры");
-            int number = int.Parse(Console.ReadLine());
+            bool isExit = false;
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
-
-            // Переменная = условие? значение при истине : значение при лжи
-            string result = number % 2 == 0 ? "Even" : "Odd";
-
-            if (result == "Even"){
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                Console.WriteLine(result);
-                Console.ReadKey();
-            }
-            else
+            while (!isExit)
             {
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                Console.WriteLine(result);
-                Console.ReadKey();
+                Console.WriteLine("Ты нашёл выход? ");
+                string answer = Console.ReadLine().ToLower();
+
+                if (answer == "выход")
+                {
+                    isExit = true;
+                    Console.WriteLine("Поздравляю! Ты нашёл выход!");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.WriteLine("Продолжай искать...");
+                }
+
+             #endregion
             }
-
-            //Console.WriteLine(result);
-            //Console.ReadKey();
-
-            #endregion
         }
     }
 }
