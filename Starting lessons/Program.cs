@@ -84,7 +84,6 @@ namespace Starting_lessons
             //CheckPoints();
             #endregion
 
-
             #region Ternary operator
             /*//Продемонстрируем магию тернарного оператора
             int number = 3;
@@ -136,26 +135,128 @@ namespace Starting_lessons
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
 
-            bool isExit = false;
+            //bool isExit = false;
 
-            while (!isExit)
-            {
-                Console.WriteLine("Ты нашёл выход? ");
-                string answer = Console.ReadLine().ToLower();
+            //while (!isExit)
+            //{
+            //    Console.WriteLine("Ты нашёл выход? ");
+            //    string answer = Console.ReadLine().ToLower();
 
-                if (answer == "выход")
+            //    if (answer == "выход")
+            //    {
+            //        isExit = true;
+            //        Console.WriteLine("Поздравляю! Ты нашёл выход!");
+            //        Console.ReadKey();
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Продолжай искать...");
+            //    }
+            //}
+
+            //Создаём меню для игры
+            
+            //Данные о персонаже
+            string name = "Windrunner";
+            int age = 18;
+            string race = "Human";
+            int experience = 0;
+            int level = 1;
+            bool isMale = false;
+
+            //Характеристики персонажа
+            int strength = 10;
+            int agility = 12;
+            int intelegence = 18;
+            int charisma = 20;
+
+            int maxPoints = 50;
+
+            bool isWork = true;
+            string input, sure;
+
+
+
+            while (isWork)
+            {   
+                Console.Clear(); // Очистка консоли
+                Console.ForegroundColor = ConsoleColor.Green;
+
+                Console.WriteLine("Меню: \n" +
+                    "1. Заполнить информацию о персонаже\n" +
+                    "2. Распределить характеристик\n" +
+                    "3. Показать информацию\n" +
+                    "4. Оценить игру\n" +
+                    "0. Выход"
+                    );
+
+                Console.Write("Выберите пункт меню (введите номер команды) \n");
+
+                input = Console.ReadLine();
+
+                switch (input)
                 {
-                    isExit = true;
-                    Console.WriteLine("Поздравляю! Ты нашёл выход!");
-                    Console.ReadKey();
-                }
-                else
-                {
-                    Console.WriteLine("Продолжай искать...");
-                }
+                    case "1":
+                        Console.WriteLine("Вы выбрали пункт 1: Заполнить информацию о персонаже.");
+                        break;
+                    case "2":
+                        Console.WriteLine("Вы выбрали пункт 2: Распределить характеристики.");
+                        break;
+                    case "3":
+                        string gender = isMale ? "Мужской" : "Женский";
 
-             #endregion
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("Информация о персонаже:");
+                        Console.WriteLine(
+                            $"Имя: {name}\n" + 
+                            $"Возраст: {age}\n" +
+                            $"Расса: {race}\n" +
+                            $"Опыт: {experience}\n" +
+                            $"Уровень: {level}\n" +
+                            $"Пол: {gender}\n"
+
+                        );
+
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.WriteLine("Характеристики персонажа:");
+                        Console.WriteLine($"Сила: {strength}\n" +
+                            $"Ловкость: {agility}\n" +
+                            $"Интеллект: {intelegence}\n" +
+                            $"Харизма: {charisma}\n" +
+                            $"Очки персонажа: {maxPoints}\n"
+                        );
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Переход в меню...\n");
+                        break;
+                    case "4":
+                        Console.WriteLine("Вы выбрали пункт 4: Оценить игру.");
+                        break;
+                    case "0":
+                        Console.WriteLine("Вы уверены, что хотите выйти? y/n ");
+                        sure = Console.ReadLine().ToLower();
+                        if (sure == "y" || sure == "yes")
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Спасибо за игру! До свидания...");
+                            
+                            isWork = false;
+                            break;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Вы остаетесь в игре. Выберите пункт меню...\n");
+                            break;
+                        }
+                    default:
+                        Console.WriteLine("Неизвестная команда. Пожалуйста, выберите пункт меню.");
+                        break;
+                }
+                Console.ReadKey();
             }
+
+
+            #endregion
         }
     }
 }
