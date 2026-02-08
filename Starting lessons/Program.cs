@@ -11,7 +11,12 @@ namespace Starting_lessons
     {
         static void Main(string[] args)
         {
-
+            //  Константы для команд меню
+            const string ExitComand = "0";
+            const string FillDescriptionComand = "1";
+            const string FillCharacteristicsComand = "2";
+            const string ShowInfoComand = "3";
+            const string RateUsComand = "4";
             #region Hello world
             // Программа 1 - Привет МИР    
 
@@ -157,12 +162,12 @@ namespace Starting_lessons
             //Создаём меню для игры
             
             //Данные о персонаже
-            string name = "Windrunner";
-            int age = 18;
-            string race = "Human";
+            string name = "";
+            int age = 0;
+            string race = "";
             int experience = 0;
-            int level = 1;
-            bool isMale = false;
+            int level = 0;
+            bool isMale = true;
 
             //Характеристики персонажа
             int strength = 10;
@@ -176,18 +181,17 @@ namespace Starting_lessons
             string input, sure;
 
 
-
             while (isWork)
             {   
                 Console.Clear(); // Очистка консоли
                 Console.ForegroundColor = ConsoleColor.Green;
 
                 Console.WriteLine("Меню: \n" +
-                    "1. Заполнить информацию о персонаже\n" +
-                    "2. Распределить характеристик\n" +
-                    "3. Показать информацию\n" +
-                    "4. Оценить игру\n" +
-                    "0. Выход"
+                    $"{FillDescriptionComand}. Заполнить информацию о персонаже\n" +
+                    $"{FillCharacteristicsComand}. Распределить характеристик\n" +
+                    $"{ShowInfoComand}. Показать информацию\n" +
+                    $"{RateUsComand}. Оценить игру\n" +
+                    $"{ExitComand}. Выход"
                     );
 
                 Console.Write("Выберите пункт меню (введите номер команды) \n");
@@ -196,13 +200,99 @@ namespace Starting_lessons
 
                 switch (input)
                 {
-                    case "1":
+                    case FillDescriptionComand:
                         Console.WriteLine("Вы выбрали пункт 1: Заполнить информацию о персонаже.");
+
+                        if (name.Length == 0)
+                        {
+                            Console.WriteLine("Введите имя персонажа: ");
+                            name = Console.ReadLine();
+                        } else
+                        {
+                            
+                            do
+                            {
+                                Console.WriteLine($"Имя персонажа уже заполнено: {name}\n" +
+                                    "Хотите изменить имя? y/n \n");
+                                sure = Console.ReadLine().ToLower();
+                                if (sure == "y" || sure == "yes")
+                                {
+                                    Console.WriteLine("Введите новое имя персонажа: ");
+                                    name = Console.ReadLine();
+                                    sure = "";
+                                    break;
+                                }
+                                else if (sure == "n" || sure == "no")
+                                {
+                                    break;
+                                } else
+                                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
+                            } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
+                        }
+
+                        if (age == 0)
+                        {
+                            Console.WriteLine("Введите возраст персонажа: ");
+                            int.TryParse(Console.ReadLine(), out age);
+                        }
+                        else
+                        {
+
+                            do
+                            {
+                                Console.WriteLine($"Возраст персонажа уже заполнен: {age}\n" +
+                                    "Хотите изменить его? y/n \n");
+                                sure = Console.ReadLine().ToLower();
+                                if (sure == "y" || sure == "yes")
+                                {
+                                    Console.WriteLine("Введите новый возраст персонажа: ");
+                                    int.TryParse(Console.ReadLine(), out age);
+                                    sure = "";
+                                    break;
+                                }
+                                else if (sure == "n" || sure == "no")
+                                {
+                                    break;
+                                }
+                                else
+                                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
+                            } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
+                        }
+
+                        if (race.Length == 0)
+                        {
+                            Console.WriteLine("Введите рассу персонажа: ");
+                            race = Console.ReadLine();
+                        }
+                        else
+                        {
+
+                            do
+                            {
+                                Console.WriteLine($"Расса персонажа уже заполнена: {race}\n" +
+                                    "Хотите изменить её? y/n \n");
+                                sure = Console.ReadLine().ToLower();
+                                if (sure == "y" || sure == "yes")
+                                {
+                                    Console.WriteLine("Введите новое имя персонажа: ");
+                                    race = Console.ReadLine();
+                                    sure = "";
+                                    break;
+                                }
+                                else if (sure == "n" || sure == "no")
+                                {
+                                    break;
+                                }
+                                else
+                                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
+                            } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
+                        }
+
                         break;
-                    case "2":
+                    case FillCharacteristicsComand:
                         Console.WriteLine("Вы выбрали пункт 2: Распределить характеристики.");
                         break;
-                    case "3":
+                    case ShowInfoComand:
                         string gender = isMale ? "Мужской" : "Женский";
 
                         Console.ForegroundColor = ConsoleColor.Yellow;
@@ -225,13 +315,11 @@ namespace Starting_lessons
                             $"Харизма: {charisma}\n" +
                             $"Очки персонажа: {maxPoints}\n"
                         );
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Переход в меню...\n");
                         break;
-                    case "4":
+                    case RateUsComand:
                         Console.WriteLine("Вы выбрали пункт 4: Оценить игру.");
                         break;
-                    case "0":
+                    case ExitComand:
                         Console.WriteLine("Вы уверены, что хотите выйти? y/n ");
                         sure = Console.ReadLine().ToLower();
                         if (sure == "y" || sure == "yes")
@@ -252,9 +340,14 @@ namespace Starting_lessons
                         Console.WriteLine("Неизвестная команда. Пожалуйста, выберите пункт меню.");
                         break;
                 }
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Переход в меню...\n");
                 Console.ReadKey();
             }
 
+            // Мне показалось, что нет смысла переписывать урок по оставшимся циклам Do While и For, поэтому просто запишу в коммент краткое описание каждого из них.
+            // Do { } while (условие) - выполняет тело цикла хотя бы один раз, а потом проверяет условие. Если условие истинно, то выполняется снова и так до тех пор, пока условие не станет ложным
+            // for (инициализация; условие; итерация) { тело цикла } - выполняет тело цикла, пока условие истинно. Инициализация выполняется один раз в начале, итерация выполняется после каждого выполнения тела цикла. Чаще всего используется для перебора элементов массива или коллекции
 
             #endregion
         }
