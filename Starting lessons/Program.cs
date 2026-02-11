@@ -288,6 +288,104 @@ namespace Starting_lessons
                             } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
                         }
 
+                        if (experience == 0)
+                        {
+                            Console.WriteLine("Введите опыт персонажа: ");
+                            int.TryParse(Console.ReadLine(), out experience);
+                        }
+                        else
+                        {
+
+                            do
+                            {
+                                Console.WriteLine($"Опыт персонажа уже заполнен: {experience}\n" +
+                                    "Хотите изменить его? y/n \n");
+                                sure = Console.ReadLine().ToLower();
+                                if (sure == "y" || sure == "yes")
+                                {
+                                    Console.WriteLine("Введите обновлённый опыт персонажа: ");
+                                    int.TryParse(Console.ReadLine(), out experience);
+                                    sure = "";
+                                    break;
+                                }
+                                else if (sure == "n" || sure == "no")
+                                {
+                                    break;
+                                }
+                                else
+                                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
+                            } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
+                        }
+
+                        if (level == 0)
+                        {
+                            Console.WriteLine("Введите уровень персонажа: ");
+                            int.TryParse(Console.ReadLine(), out level);
+                        }
+                        else
+                        {
+
+                            do
+                            {
+                                Console.WriteLine($"Уровень персонажа уже заполнен: {level}\n" +
+                                    "Хотите изменить его? y/n \n");
+                                sure = Console.ReadLine().ToLower();
+                                if (sure == "y" || sure == "yes")
+                                {
+                                    Console.WriteLine("Введите обновлённый уровень персонажа: ");
+                                    int.TryParse(Console.ReadLine(), out level);
+                                    sure = "";
+                                    break;
+                                }
+                                else if (sure == "n" || sure == "no")
+                                {
+                                    break;
+                                }
+                                else
+                                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
+                            } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
+                        }
+
+                        if (isMale)
+                        do 
+                         {
+                            Console.WriteLine($"Пол персонажа: Мужской\nХотите изменить пол на Женский? y/n \n");
+                            sure = Console.ReadLine().ToLower();
+                            if (sure == "y" || sure == "yes")
+                            {
+                                isMale = false;
+                                Console.WriteLine("Пол персонажа изменён на женский ");
+                                break;
+                            }
+                            else if (sure == "n" || sure == "no")
+                            {
+                                break;
+                            }
+                            else
+                                Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
+                        } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no") ;
+
+                        else
+                        {
+                            do
+                            {
+                                Console.WriteLine($"Пол персонажа: Женский\nХотите изменить пол на Мужской? y/n \n");
+                                sure = Console.ReadLine().ToLower();
+                                if (sure == "y" || sure == "yes")
+                                {
+                                    isMale = true;
+                                    Console.WriteLine("Пол персонажа изменён на мужской ");
+                                    break;
+                                }
+                                else if (sure == "n" || sure == "no")
+                                {
+                                    break;
+                                }
+                                else
+                                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
+                            } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
+                        }
+
                         break;
                     case FillCharacteristicsComand:
                         Console.WriteLine("Вы выбрали пункт 2: Распределить характеристики.");
