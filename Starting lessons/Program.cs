@@ -9,8 +9,9 @@ namespace Starting_lessons
 
     internal class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
+
             //  Константы для команд меню
             const string ExitComand = "0";
             const string FillDescriptionComand = "1";
@@ -186,16 +187,9 @@ namespace Starting_lessons
                 Console.Clear(); // Очистка консоли
                 Console.ForegroundColor = ConsoleColor.Green;
 
-                Console.WriteLine("Меню: \n" +
-                    $"{FillDescriptionComand}. Заполнить информацию о персонаже\n" +
-                    $"{FillCharacteristicsComand}. Распределить характеристик\n" +
-                    $"{ShowInfoComand}. Показать информацию\n" +
-                    $"{RateUsComand}. Оценить игру\n" +
-                    $"{ExitComand}. Выход"
-                    );
+                ShowMenu(FillDescriptionComand,FillCharacteristicsComand, ShowInfoComand, RateUsComand, ExitComand);
 
                 Console.Write("Выберите пункт меню (введите номер команды) \n");
-
                 input = Console.ReadLine();
 
                 switch (input)
@@ -384,7 +378,7 @@ namespace Starting_lessons
                                 else
                                     Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
                             } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
-                        }
+                        }   
 
                         break;
                     case FillCharacteristicsComand:
@@ -448,9 +442,25 @@ namespace Starting_lessons
             // for (инициализация; условие; итерация) { тело цикла } - выполняет тело цикла, пока условие истинно. Инициализация выполняется один раз в начале, итерация выполняется после каждого выполнения тела цикла. Чаще всего используется для перебора элементов массива или коллекции
             // Пока не добавляю использование for, практика будет в массивах. На данный момент перехожу в "методы"
 
-            
-
             #endregion
+        }
+
+        //Метод:
+        //[модификаторы] тип_возвращаемого_значения название_метода([параметры])
+        //{
+        //    тело метода
+        //}
+
+        private static void ShowMenu(string fillDescriptionComand, string fillCharacteristicsComand,
+                                        string showInfoComand, string rateUsComand, string exitComand)
+        {
+            Console.WriteLine("Меню: \n" +
+                     $"{fillDescriptionComand}. Заполнить информацию о персонаже\n" +
+                     $"{fillCharacteristicsComand}. Распределить характеристик\n" +
+                     $"{showInfoComand}. Показать информацию\n" +
+                     $"{rateUsComand}. Оценить игру\n" +
+                     $"{exitComand}. Выход"
+                     );
         }
     }
 }
