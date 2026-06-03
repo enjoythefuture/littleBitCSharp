@@ -164,11 +164,12 @@ namespace Starting_lessons
             
             //Данные о персонаже
             string name = "";
-            int age = 0;
             string race = "";
+            int age = 0;
             int experience = 0;
             int level = 0;
             bool isMale = true;
+            int minNameLength = 3;
 
             //Характеристики персонажа
             int strength = 10;
@@ -195,151 +196,13 @@ namespace Starting_lessons
                 switch (input)
                 {
                     case FillDescriptionComand:
-                        Console.WriteLine("Вы выбрали пункт 1: Заполнить информацию о персонаже.");
 
-                        if (name.Length == 0)
-                        {
-                            Console.WriteLine("Введите имя персонажа: ");
-                            name = Console.ReadLine();
-                        } else
-                        {
-                            
-                            do
-                            {
-                                Console.WriteLine($"Имя персонажа уже заполнено: {name}\n" +
-                                    "Хотите изменить имя? y/n \n");
-                                sure = Console.ReadLine().ToLower();
-                                if (sure == "y" || sure == "yes")
-                                {
-                                    Console.WriteLine("Введите новое имя персонажа: ");
-                                    name = Console.ReadLine();
-                                    sure = "";
-                                    break;
-                                }
-                                else if (sure == "n" || sure == "no")
-                                {
-                                    break;
-                                } else
-                                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
-                            } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
-                        }
-
-                        if (age == 0)
-                        {
-                            Console.WriteLine("Введите возраст персонажа: ");
-                            int.TryParse(Console.ReadLine(), out age);
-                        }
-                        else
-                        {
-
-                            do
-                            {
-                                Console.WriteLine($"Возраст персонажа уже заполнен: {age}\n" +
-                                    "Хотите изменить его? y/n \n");
-                                sure = Console.ReadLine().ToLower();
-                                if (sure == "y" || sure == "yes")
-                                {
-                                    Console.WriteLine("Введите новый возраст персонажа: ");
-                                    int.TryParse(Console.ReadLine(), out age);
-                                    sure = "";
-                                    break;
-                                }
-                                else if (sure == "n" || sure == "no")
-                                {
-                                    break;
-                                }
-                                else
-                                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
-                            } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
-                        }
-
-                        if (race.Length == 0)
-                        {
-                            Console.WriteLine("Введите рассу персонажа: ");
-                            race = Console.ReadLine();
-                        }
-                        else
-                        {
-
-                            do
-                            {
-                                Console.WriteLine($"Расса персонажа уже заполнена: {race}\n" +
-                                    "Хотите изменить её? y/n \n");
-                                sure = Console.ReadLine().ToLower();
-                                if (sure == "y" || sure == "yes")
-                                {
-                                    Console.WriteLine("Введите новое имя персонажа: ");
-                                    race = Console.ReadLine();
-                                    sure = "";
-                                    break;
-                                }
-                                else if (sure == "n" || sure == "no")
-                                {
-                                    break;
-                                }
-                                else
-                                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
-                            } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
-                        }
-
-                        if (experience == 0)
-                        {
-                            Console.WriteLine("Введите опыт персонажа: ");
-                            int.TryParse(Console.ReadLine(), out experience);
-                        }
-                        else
-                        {
-
-                            do
-                            {
-                                Console.WriteLine($"Опыт персонажа уже заполнен: {experience}\n" +
-                                    "Хотите изменить его? y/n \n");
-                                sure = Console.ReadLine().ToLower();
-                                if (sure == "y" || sure == "yes")
-                                {
-                                    Console.WriteLine("Введите обновлённый опыт персонажа: ");
-                                    int.TryParse(Console.ReadLine(), out experience);
-                                    sure = "";
-                                    break;
-                                }
-                                else if (sure == "n" || sure == "no")
-                                {
-                                    break;
-                                }
-                                else
-                                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
-                            } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
-                        }
-
-                        if (level == 0)
-                        {
-                            Console.WriteLine("Введите уровень персонажа: ");
-                            int.TryParse(Console.ReadLine(), out level);
-                        }
-                        else
-                        {
-
-                            do
-                            {
-                                Console.WriteLine($"Уровень персонажа уже заполнен: {level}\n" +
-                                    "Хотите изменить его? y/n \n");
-                                sure = Console.ReadLine().ToLower();
-                                if (sure == "y" || sure == "yes")
-                                {
-                                    Console.WriteLine("Введите обновлённый уровень персонажа: ");
-                                    int.TryParse(Console.ReadLine(), out level);
-                                    sure = "";
-                                    break;
-                                }
-                                else if (sure == "n" || sure == "no")
-                                {
-                                    break;
-                                }
-                                else
-                                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
-                            } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
-                        }
-
+                        name = ReadString("Введите имя персонажа: ", minNameLength);
+                        race = ReadString("Введите рассу персонажа: ");
+                        age = ReadInt("Ввведите возраст персонажа: ");
+                        experience = ReadInt("Введите опыт персонажа: ");
+                        level = ReadInt("Введите уровень персонажа: ");
+                        
                         if (isMale)
                         do 
                          {
@@ -461,6 +324,49 @@ namespace Starting_lessons
                      $"{rateUsComand}. Оценить игру\n" +
                      $"{exitComand}. Выход"
                      );
+        }
+
+        private static string ReadString(string message, int minLength = 0)
+        {
+            string value;
+            bool isParseSuccess;
+
+            do
+            {
+                Console.Write(message);
+                value = Console.ReadLine();
+                isParseSuccess = string.IsNullOrWhiteSpace(value) == false && value.Length >= minLength;
+
+                if (!isParseSuccess)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Некорректный ввод");
+                    Console.ResetColor();
+                } 
+            } while (!isParseSuccess);
+
+            return value;
+        }
+
+        private static int ReadInt(string message, int minValue = 0)
+        {
+            int value;
+            bool isParseSuccess;
+
+            do
+            {
+                Console.Write(message);
+                isParseSuccess = int.TryParse(Console.ReadLine(), out value) && value > 0 ;
+
+                if (!isParseSuccess)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Некорректный ввод");
+                    Console.ResetColor();
+                } 
+            } while (!isParseSuccess);
+
+            return value;
         }
     }
 }
