@@ -202,51 +202,15 @@ namespace Starting_lessons
                         age = ReadInt("Ввведите возраст персонажа: ");
                         experience = ReadInt("Введите опыт персонажа: ");
                         level = ReadInt("Введите уровень персонажа: ");
-                        
-                        if (isMale)
-                        do 
-                         {
-                            Console.WriteLine($"Пол персонажа: Мужской\nХотите изменить пол на Женский? y/n \n");
-                            sure = Console.ReadLine().ToLower();
-                            if (sure == "y" || sure == "yes")
-                            {
-                                isMale = false;
-                                Console.WriteLine("Пол персонажа изменён на женский ");
-                                break;
-                            }
-                            else if (sure == "n" || sure == "no")
-                            {
-                                break;
-                            }
-                            else
-                                Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
-                        } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no") ;
+                        isMale = ReadGender("Введите пол персонажа: ");
+                           
 
-                        else
-                        {
-                            do
-                            {
-                                Console.WriteLine($"Пол персонажа: Женский\nХотите изменить пол на Мужской? y/n \n");
-                                sure = Console.ReadLine().ToLower();
-                                if (sure == "y" || sure == "yes")
-                                {
-                                    isMale = true;
-                                    Console.WriteLine("Пол персонажа изменён на мужской ");
-                                    break;
-                                }
-                                else if (sure == "n" || sure == "no")
-                                {
-                                    break;
-                                }
-                                else
-                                    Console.WriteLine("Некорректный ввод. Пожалуйста, введите y/n");
-                            } while (sure != "y" || sure != "yes" || sure != "n" || sure != "no");
-                        }   
+                    break;
 
-                        break;
                     case FillCharacteristicsComand:
                         Console.WriteLine("Вы выбрали пункт 2: Распределить характеристики.");
-                        break;
+                    break;
+
                     case ShowInfoComand:
                         string gender = isMale ? "Мужской" : "Женский";
 
@@ -270,10 +234,12 @@ namespace Starting_lessons
                             $"Харизма: {charisma}\n" +
                             $"Очки персонажа: {maxPoints}\n"
                         );
-                        break;
+                    break;
+
                     case RateUsComand:
                         Console.WriteLine("Вы выбрали пункт 4: Оценить игру.");
-                        break;
+                    break;
+
                     case ExitComand:
                         Console.WriteLine("Вы уверены, что хотите выйти? y/n ");
                         sure = Console.ReadLine().ToLower();
@@ -293,7 +259,7 @@ namespace Starting_lessons
                         }
                     default:
                         Console.WriteLine("Неизвестная команда. Пожалуйста, выберите пункт меню.");
-                        break;
+                    break;
                 }
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Переход в меню...\n");
@@ -338,11 +304,7 @@ namespace Starting_lessons
                 isParseSuccess = string.IsNullOrWhiteSpace(value) == false && value.Length >= minLength;
 
                 if (!isParseSuccess)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Некорректный ввод");
-                    Console.ResetColor();
-                } 
+                    PrintWarinngInvalidInput();
             } while (!isParseSuccess);
 
             return value;
@@ -356,17 +318,49 @@ namespace Starting_lessons
             do
             {
                 Console.Write(message);
-                isParseSuccess = int.TryParse(Console.ReadLine(), out value) && value > 0 ;
+                isParseSuccess = int.TryParse(Console.ReadLine(), out value) && value > minValue ;
 
                 if (!isParseSuccess)
                 {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Некорректный ввод");
-                    Console.ResetColor();
-                } 
+                    PrintWarinngInvalidInput();
+                }
             } while (!isParseSuccess);
 
             return value;
+        }
+
+        private static void PrintWarinngInvalidInput()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Некорректный ввод");
+            Console.ResetColor();
+        }
+
+        private static bool ReadGender(string message)
+        {
+            bool isParseSuccess = true;
+            string maleGenderMark = "М";
+            string femaleGenderMark = "Ж";
+            string genderInput;
+
+            do
+            {
+                Console.WriteLine($"Введите пол ({maleGenderMark}/{femaleGenderMark})");
+                genderInput = Console.ReadLine().ToUpper();
+
+                if (genderInput == maleGenderMark)
+                    return true;
+
+                else if (genderInput == femaleGenderMark)
+                    return false;
+                else
+                {
+                    isParseSuccess = false;
+                    PrintWarinngInvalidInput();
+
+                } 
+            } while (!isParseSuccess);
+            return true;
         }
     }
 }
