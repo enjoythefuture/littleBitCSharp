@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Starting_lessons
 {
@@ -169,7 +170,6 @@ namespace Starting_lessons
             int experience = 0;
             int level = 0;
             bool isMale = true;
-            int minNameLength = 3;
 
             //Характеристики персонажа
             int strength = 10;
@@ -181,6 +181,7 @@ namespace Starting_lessons
 
             bool isWork = true;
             string input, sure;
+
 
 
             while (isWork)
@@ -197,18 +198,14 @@ namespace Starting_lessons
                 {
                     case FillDescriptionComand:
 
-                        name = ReadString("Введите имя персонажа: ", minNameLength);
-                        race = ReadString("Введите рассу персонажа: ");
-                        age = ReadInt("Ввведите возраст персонажа: ");
-                        experience = ReadInt("Введите опыт персонажа: ");
-                        level = ReadInt("Введите уровень персонажа: ");
-                        isMale = ReadGender("Введите пол персонажа: ");
-                           
+                        FillCharacterDescription(out name, out age, out race, out experience, out level, out isMale);
 
                     break;
 
                     case FillCharacteristicsComand:
-                        Console.WriteLine("Вы выбрали пункт 2: Распределить характеристики.");
+
+                        FillCharacteristic(out strength, out agility, out intelegence, out charisma);
+
                     break;
 
                     case ShowInfoComand:
@@ -280,6 +277,27 @@ namespace Starting_lessons
         //    тело метода
         //}
 
+        private static void FillCharacterDescription(out string name, out int age, out string race, out int experience, out int level, out bool isMale)
+        {
+            int minNameLength = 3;
+
+            name = ReadString("Введите имя персонажа: ", minNameLength);
+            race = ReadString("Введите рассу персонажа: ");
+            age = ReadInt("Ввведите возраст персонажа: ");
+            experience = ReadInt("Введите опыт персонажа: ");
+            level = ReadInt("Введите уровень персонажа: ");
+            isMale = ReadGender("Введите пол персонажа: ");
+        }
+
+        private static void FillCharacteristic(out int strength, out int agility, out int intelegence, out int charisma)
+        {
+            strength = ReadInt("Введите силу персонажа: ");
+            agility = ReadInt("Введите ловкость персонажа: ");
+            intelegence = ReadInt("Введите интеллект персонажа: ");
+            charisma = ReadInt("Введите харизму персонажа: ");
+
+        }
+
         private static void ShowMenu(string fillDescriptionComand, string fillCharacteristicsComand,
                                         string showInfoComand, string rateUsComand, string exitComand)
         {
@@ -339,8 +357,8 @@ namespace Starting_lessons
         private static bool ReadGender(string message)
         {
             bool isParseSuccess = true;
-            string maleGenderMark = "М";
-            string femaleGenderMark = "Ж";
+            string maleGenderMark = "M";
+            string femaleGenderMark = "F";
             string genderInput;
 
             do
