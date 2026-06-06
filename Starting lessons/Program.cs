@@ -162,7 +162,7 @@ namespace Starting_lessons
             //}
 
             //Создаём меню для игры
-            
+
             //Данные о персонаже
             string name = "";
             string race = "";
@@ -182,6 +182,13 @@ namespace Starting_lessons
             bool isWork = true;
             string input, sure;
 
+            string[] commands = {$"{FillDescriptionComand}. Заполнить информацию о персонаже\n",
+                   $"{FillCharacteristicsComand}. Распределить характеристик\n",
+                   $"{ShowInfoComand}. Показать информацию\n",
+                   $"{RateUsComand}. Оценить игру\n",
+                   $"{ExitComand}. Выход"
+            };
+
 
 
             while (isWork)
@@ -189,7 +196,7 @@ namespace Starting_lessons
                 Console.Clear(); // Очистка консоли
                 Console.ForegroundColor = ConsoleColor.Green;
 
-                ShowMenu(FillDescriptionComand,FillCharacteristicsComand, ShowInfoComand, RateUsComand, ExitComand);
+                ShowMenu(commands);
 
                 Console.Write("Выберите пункт меню (введите номер команды) \n");
                 input = Console.ReadLine();
@@ -298,16 +305,13 @@ namespace Starting_lessons
 
         }
 
-        private static void ShowMenu(string fillDescriptionComand, string fillCharacteristicsComand,
-                                        string showInfoComand, string rateUsComand, string exitComand)
+        private static void ShowMenu(string[] commands)
         {
-            Console.WriteLine("Меню: \n" +
-                     $"{fillDescriptionComand}. Заполнить информацию о персонаже\n" +
-                     $"{fillCharacteristicsComand}. Распределить характеристик\n" +
-                     $"{showInfoComand}. Показать информацию\n" +
-                     $"{rateUsComand}. Оценить игру\n" +
-                     $"{exitComand}. Выход"
-                     );
+            Console.WriteLine("Maim menu");
+            foreach (string command in commands)
+            {
+                Console.WriteLine(command);
+            }
         }
 
         private static string ReadString(string message, int minLength = 0)
