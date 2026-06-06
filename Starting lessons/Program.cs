@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Starting_lessons
@@ -19,6 +20,7 @@ namespace Starting_lessons
             const string FillCharacteristicsComand = "2";
             const string ShowInfoComand = "3";
             const string RateUsComand = "4";
+            const string PlayComand = "5";
             #region Hello world
             // Программа 1 - Привет МИР    
 
@@ -170,6 +172,7 @@ namespace Starting_lessons
             int experience = 0;
             int level = 0;
             bool isMale = true;
+            char skin = '@';
 
             //Характеристики персонажа
             int strength = 10;
@@ -186,13 +189,14 @@ namespace Starting_lessons
                    $"{FillCharacteristicsComand}. Распределить характеристик\n",
                    $"{ShowInfoComand}. Показать информацию\n",
                    $"{RateUsComand}. Оценить игру\n",
+                   $"{PlayComand}. Играть\n",
                    $"{ExitComand}. Выход"
             };
 
 
 
             while (isWork)
-            {   
+            {
                 Console.Clear(); // Очистка консоли
                 Console.ForegroundColor = ConsoleColor.Green;
 
@@ -207,13 +211,13 @@ namespace Starting_lessons
 
                         FillCharacterDescription(out name, out age, out race, out experience, out level, out isMale);
 
-                    break;
+                        break;
 
                     case FillCharacteristicsComand:
 
                         FillCharacteristic(out strength, out agility, out intelegence, out charisma);
 
-                    break;
+                        break;
 
                     case ShowInfoComand:
                         string gender = isMale ? "Мужской" : "Женский";
@@ -221,7 +225,7 @@ namespace Starting_lessons
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Информация о персонаже:");
                         Console.WriteLine(
-                            $"Имя: {name}\n" + 
+                            $"Имя: {name}\n" +
                             $"Возраст: {age}\n" +
                             $"Расса: {race}\n" +
                             $"Опыт: {experience}\n" +
@@ -238,10 +242,18 @@ namespace Starting_lessons
                             $"Харизма: {charisma}\n" +
                             $"Очки персонажа: {maxPoints}\n"
                         );
-                    break;
+                        break;
 
                     case RateUsComand:
+
                         Console.WriteLine("Вы выбрали пункт 4: Оценить игру.");
+
+                        break;
+
+                    case PlayComand:
+
+                        Play(skin);
+
                     break;
 
                     case ExitComand:
@@ -251,7 +263,7 @@ namespace Starting_lessons
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Спасибо за игру! До свидания...");
-                            
+
                             isWork = false;
                             break;
                         }
@@ -340,7 +352,7 @@ namespace Starting_lessons
             do
             {
                 Console.Write(message);
-                isParseSuccess = int.TryParse(Console.ReadLine(), out value) && value > minValue ;
+                isParseSuccess = int.TryParse(Console.ReadLine(), out value) && value > minValue;
 
                 if (!isParseSuccess)
                 {
@@ -380,9 +392,56 @@ namespace Starting_lessons
                     isParseSuccess = false;
                     PrintWarinngInvalidInput();
 
-                } 
+                }
             } while (!isParseSuccess);
             return true;
+        }
+
+        private static void Play(char skin)
+        {
+            Console.CursorVisible = false;
+            Console.Clear();
+
+            int playerPositionX = 1;
+            int playerPositionY = 1;
+
+            char[,] map = new char[20, 25]
+            {
+                { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
+                { '#',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#'},
+                { '#',' ',' ','$',' ','#',' ',' ','$',' ',' ',' ','#',' ','$',' ',' ',' ',' ',' ','#',' ','$',' ','#'},
+                { '#',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ','#',' ','$',' ','#'},
+                { '#',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ','#',' ','$',' ','#'},
+                { '#','#',' ',' ',' ','#',' ','$',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ','#',' ',' ',' ','#'},
+                { '#',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+                { '#','$','#','#','#','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+                { '#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+                { '#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','#','#','#','#','#','#'},
+                { '#',' ',' ',' ',' ',' ',' ','#','#','#','#','#','#','#',' ',' ',' ',' ','#',' ',' ',' ','#',' ','#'},
+                { '#',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ','#',' ',' ',' ',' ','#',' ',' ',' ','#',' ','#'},
+                { '#',' ',' ','#','#','#','#','#',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ','#',' ','#'},
+                { '#',' ',' ',' ',' ',' ',' ','#',' ',' ','$',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#'},
+                { '#',' ',' ',' ',' ',' ',' ','#',' ',' ',' ',' ',' ','#',' ',' ',' ',' ','#','#','#','#',' ',' ','#'},
+                { '#',' ',' ',' ',' ','$',' ','#',' ',' ',' ',' ',' ','#',' ',' ',' ',' ','#',' ',' ',' ',' ',' ','#'},
+                { '#',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ',' ','#',' ','#','#','#','#',' ',' ',' ',' ',' ','#'},
+                { '#',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','#','$','$','$',' ',' ','#'},
+                { '#',' ',' ','#',' ',' ',' ','#',' ',' ',' ',' ',' ',' ',' ',' ',' ','$','#',' ',' ',' ',' ',' ','#'},
+                { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
+            };
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                { 
+                    Console.Write(map[i, j]); 
+                } Console.WriteLine();      
+            }
+
+            Console.SetCursorPosition(playerPositionY, playerPositionX);
+            Console.Write(skin);
+            Console.SetCursorPosition(100, 0);
+            Console.ReadLine();
+            Console.CursorVisible = true;
         }
     }
 }
