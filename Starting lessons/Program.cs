@@ -401,6 +401,9 @@ namespace Starting_lessons
         {
             Console.CursorVisible = false;
             Console.Clear();
+            bool isRun = true;
+            int directionX;
+            int directionY;
 
             int playerPositionX = 1;
             int playerPositionY = 1;
@@ -437,11 +440,50 @@ namespace Starting_lessons
                 } Console.WriteLine();      
             }
 
-            Console.SetCursorPosition(playerPositionY, playerPositionX);
-            Console.Write(skin);
-            Console.SetCursorPosition(100, 0);
+            while (isRun)
+            {
+                DrawSymbol(playerSkin, playerPositionX, playerPositionY);
+
+                GetDirection(out directionX, out directionY);
+                TryMove()
+            }
+
             Console.ReadLine();
             Console.CursorVisible = true;
+        }
+
+        private static void GetDirection(out int directionX, out int directionY)
+        {
+            directionX = 0;
+            directionY = 0;
+
+            ConsoleKey input = Console.ReadKey().Key;
+
+            switch (input)
+            {
+                case ConsoleKey.DownArrow:
+                    directionY = 1;
+                break;
+
+                case ConsoleKey.UpArrow:
+                    directionY = -1;
+                break;
+
+                case ConsoleKey.LeftArrow:
+                    directionX = -1;
+                break;
+
+                case ConsoleKey.RightArrow:
+                    directionX = 1;
+                break;
+            }
+        }
+
+        private static void DrawSymbol(char symbol, int positionX, int positionY)
+        {
+            Console.SetCursorPosition(positionY, positionX);
+            Console.Write(symbol);
+            Console.SetCursorPosition(100, 0);
         }
     }
 }
