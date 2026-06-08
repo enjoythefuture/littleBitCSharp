@@ -401,7 +401,9 @@ namespace Starting_lessons
         {
             Console.CursorVisible = false;
             Console.Clear();
+            
             bool isRun = true;
+
             int directionX;
             int directionY;
 
@@ -442,14 +444,35 @@ namespace Starting_lessons
 
             while (isRun)
             {
-                DrawSymbol(playerSkin, playerPositionX, playerPositionY);
+                DrawSymbol(skin, playerPositionX, playerPositionY);
 
                 GetDirection(out directionX, out directionY);
-                TryMove()
+
+                DrawSymbol(map[playerPositionY, playerPositionX], playerPositionX, playerPositionY);
+
+                TryMove(map, directionX, directionY, ref playerPositionX, ref playerPositionY);
             }
 
             Console.ReadLine();
             Console.CursorVisible = true;
+
+        }
+        private static void DrawSymbol(char symbol, int positionX, int positionY)
+        {
+            Console.SetCursorPosition(positionX, positionY);
+            Console.Write(symbol);
+            Console.SetCursorPosition(Console.WindowWidth - 1, 0);
+        }
+
+        private static void TryMove(char[,] map, int directionX, int directionY, ref int playerPositionX, ref int playerPositionY)
+        {
+            char wall = '#';
+
+            if (map[playerPositionY + directionY, playerPositionX + directionX] != wall)
+            {
+                playerPositionX += directionX;
+                playerPositionY += directionY;
+            }
         }
 
         private static void GetDirection(out int directionX, out int directionY)
@@ -479,11 +502,6 @@ namespace Starting_lessons
             }
         }
 
-        private static void DrawSymbol(char symbol, int positionX, int positionY)
-        {
-            Console.SetCursorPosition(positionY, positionX);
-            Console.Write(symbol);
-            Console.SetCursorPosition(100, 0);
-        }
+
     }
 }
