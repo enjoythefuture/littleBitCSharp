@@ -401,7 +401,7 @@ namespace Starting_lessons
         {
             Console.CursorVisible = false;
             Console.Clear();
-            
+
             bool isRun = true;
 
             int directionX;
@@ -434,29 +434,94 @@ namespace Starting_lessons
                 { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
             };
 
-            for (int i = 0; i < map.GetLength(0); i++)
-            {
-                for (int j = 0; j < map.GetLength(1); j++)
-                { 
-                    Console.Write(map[i, j]); 
-                } Console.WriteLine();      
-            }
+            char coinSkin = '$';
+            char emptyCell = '?';
+
+
+            int inventoryPositionY = map.GetLength(0) + 2;
+            char[] inventory = new char[GetCharCount(map, coinSkin)];
+            ClearInventory(emptyCell, inventory);
+
+            DrawMap(map);
 
             while (isRun)
             {
                 DrawSymbol(skin, playerPositionX, playerPositionY);
+
+                DrawInventory(inventory, inventoryPositionY);
 
                 GetDirection(out directionX, out directionY);
 
                 DrawSymbol(map[playerPositionY, playerPositionX], playerPositionX, playerPositionY);
 
                 TryMove(map, directionX, directionY, ref playerPositionX, ref playerPositionY);
+
+                TryCollect(map, playerPositionX, playerPositionY, coinSkin, emptyCell, inventory);
             }
 
             Console.ReadLine();
             Console.CursorVisible = true;
 
         }
+
+        private static void TryCollect(char[,] map, int playerPositionX, int playerPositionY, char collectableSkin,
+                                                                char emptyCell, char[] inventory)
+        {
+            char emptyField = ' ';
+
+            if (map[playerPositionY, playerPositionX] == collectableSkin)
+            {
+                for (int i = 0; i < inventory.Length; i++)
+                {
+                    if (inventory[i] == emptyCell)
+                    {
+                        map[playerPositionY, playerPositionX] = emptyField;
+                        inventory[i] = collectableSkin;
+                        break;
+                    }
+                }
+            }
+
+        }
+
+        private static void DrawInventory(char[] inventory, int inventoryPositionY)
+        {
+            Console.SetCursorPosition(0, inventoryPositionY);
+
+            for (int i = 0; i < inventory.Length; i++) 
+                Console.Write(inventory[i] + " ");
+        }
+
+        private static void ClearInventory(char emptyCell, char[] inventory)
+        {
+            for (int i = 0; i < inventory.Length; i++)
+                inventory[i] = emptyCell;
+        }
+
+        private static void DrawMap(char[,] map)
+        {
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    Console.Write(map[i, j]);
+                }
+                Console.WriteLine();
+            }
+        }
+
+        private static int GetCharCount(char[,] array, char symbol)
+        {
+            int coint = 0;
+
+            for (int i = 0; i < array.GetLength(0); i++) 
+                for (int j = 0; j < array.GetLength(1); j++)
+                    if (array[i, j] == symbol)
+                        coint++;
+
+            return coint;
+        }
+
         private static void DrawSymbol(char symbol, int positionX, int positionY)
         {
             Console.SetCursorPosition(positionX, positionY);
