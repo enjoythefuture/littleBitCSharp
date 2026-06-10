@@ -11,16 +11,32 @@ namespace Starting_lessons
 
     internal class Program
     {
+        enum MainMenuCommand
+        {
+            Exit,
+            FillDescription,
+            FillCharacteristics,
+            ShowInfo,
+            RateUs,
+            Play
+        }
+
+        enum MapField
+        {
+            Empty = ' ',
+            Wall = '#',
+            Coin = '$'
+        }
+        enum InvetnoryCell
+        {
+            Empty = '?',
+            Coin = '$'
+        }
         private static void Main()
         {
 
             //  Константы для команд меню
-            const string ExitComand = "0";
-            const string FillDescriptionComand = "1";
-            const string FillCharacteristicsComand = "2";
-            const string ShowInfoComand = "3";
-            const string RateUsComand = "4";
-            const string PlayComand = "5";
+
             #region Hello world
             // Программа 1 - Привет МИР    
 
@@ -183,14 +199,16 @@ namespace Starting_lessons
             int maxPoints = 50;
 
             bool isWork = true;
-            string input, sure;
+            string sure;
+            int input;
 
-            string[] commands = {$"{FillDescriptionComand}. Заполнить информацию о персонаже\n",
-                   $"{FillCharacteristicsComand}. Распределить характеристик\n",
-                   $"{ShowInfoComand}. Показать информацию\n",
-                   $"{RateUsComand}. Оценить игру\n",
-                   $"{PlayComand}. Играть\n",
-                   $"{ExitComand}. Выход"
+            string[] commands = 
+                  {$"{(int)MainMenuCommand.FillDescription}. Заполнить информацию о персонаже\n",
+                   $"{(int)MainMenuCommand.FillCharacteristics}. Распределить характеристик\n",
+                   $"{(int)MainMenuCommand.ShowInfo}. Показать информацию\n",
+                   $"{(int)MainMenuCommand.RateUs}. Оценить игру\n",
+                   $"{(int)MainMenuCommand.Play}. Играть\n",
+                   $"{(int)MainMenuCommand.Exit}. Выход"
             };
 
 
@@ -203,23 +221,23 @@ namespace Starting_lessons
                 ShowMenu(commands);
 
                 Console.Write("Выберите пункт меню (введите номер команды) \n");
-                input = Console.ReadLine();
+                input = ReadInt("Введите номер команды ", -1);
 
-                switch (input)
+                switch ((MainMenuCommand)input)
                 {
-                    case FillDescriptionComand:
+                    case MainMenuCommand.FillDescription:
 
                         FillCharacterDescription(out name, out age, out race, out experience, out level, out isMale);
 
                         break;
 
-                    case FillCharacteristicsComand:
+                    case MainMenuCommand.FillCharacteristics:
 
                         FillCharacteristic(out strength, out agility, out intelegence, out charisma);
 
                         break;
 
-                    case ShowInfoComand:
+                    case MainMenuCommand.ShowInfo:
                         string gender = isMale ? "Мужской" : "Женский";
 
                         Console.ForegroundColor = ConsoleColor.Yellow;
@@ -244,19 +262,19 @@ namespace Starting_lessons
                         );
                         break;
 
-                    case RateUsComand:
+                    case MainMenuCommand.RateUs:
 
                         Console.WriteLine("Вы выбрали пункт 4: Оценить игру.");
 
                         break;
 
-                    case PlayComand:
+                    case MainMenuCommand.Play:
 
                         Play(skin);
 
                     break;
 
-                    case ExitComand:
+                    case MainMenuCommand.Exit:
                         Console.WriteLine("Вы уверены, что хотите выйти? y/n ");
                         sure = Console.ReadLine().ToLower();
                         if (sure == "y" || sure == "yes")
@@ -439,8 +457,8 @@ namespace Starting_lessons
 
 
             int inventoryPositionY = map.GetLength(0) + 2;
-            char[] inventory = new char[GetCharCount(map, coinSkin)];
-            ClearInventory(emptyCell, inventory);
+            char[] inventory = new char[GetCharCount(map, MapField.Coin)];
+            ClearInventory(inventory);
 
             DrawMap(map);
 
@@ -492,10 +510,10 @@ namespace Starting_lessons
                 Console.Write(inventory[i] + " ");
         }
 
-        private static void ClearInventory(char emptyCell, char[] inventory)
+        private static void ClearInventory(char[] inventory)
         {
             for (int i = 0; i < inventory.Length; i++)
-                inventory[i] = emptyCell;
+                inventory[i] = (char)InvetnoryCell.Empty;
         }
 
         private static void DrawMap(char[,] map)
@@ -510,13 +528,14 @@ namespace Starting_lessons
             }
         }
 
-        private static int GetCharCount(char[,] array, char symbol)
+        private static int GetCharCount(char[,] array, MapField field)
         {
             int coint = 0;
+            char fieldChar = (char)field;
 
             for (int i = 0; i < array.GetLength(0); i++) 
                 for (int j = 0; j < array.GetLength(1); j++)
-                    if (array[i, j] == symbol)
+                    if (array[i, j] == FieldChar)
                         coint++;
 
             return coint;
