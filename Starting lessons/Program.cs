@@ -27,7 +27,7 @@ namespace Starting_lessons
             Wall = '#',
             Coin = '$'
         }
-        enum InvetnoryCell
+        enum InventoryCell
         {
             Empty = '?',
             Coin = '$'
@@ -452,9 +452,6 @@ namespace Starting_lessons
                 { '#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#','#'},
             };
 
-            char coinSkin = '$';
-            char emptyCell = '?';
-
 
             int inventoryPositionY = map.GetLength(0) + 2;
             char[] inventory = new char[GetCharCount(map, MapField.Coin)];
@@ -474,7 +471,7 @@ namespace Starting_lessons
 
                 TryMove(map, directionX, directionY, ref playerPositionX, ref playerPositionY);
 
-                TryCollect(map, playerPositionX, playerPositionY, coinSkin, emptyCell, inventory);
+                TryCollect(map, playerPositionX, playerPositionY, MapField.Coin, inventory);
             }
 
             Console.ReadLine();
@@ -482,19 +479,16 @@ namespace Starting_lessons
 
         }
 
-        private static void TryCollect(char[,] map, int playerPositionX, int playerPositionY, char collectableSkin,
-                                                                char emptyCell, char[] inventory)
+        private static void TryCollect(char[,] map, int playerPositionX, int playerPositionY, MapField collectableSkin, char[] inventory)
         {
-            char emptyField = ' ';
-
-            if (map[playerPositionY, playerPositionX] == collectableSkin)
+            if (map[playerPositionY, playerPositionX] == (char)collectableSkin)
             {
                 for (int i = 0; i < inventory.Length; i++)
                 {
-                    if (inventory[i] == emptyCell)
+                    if (inventory[i] == (char)InventoryCell.Empty)
                     {
-                        map[playerPositionY, playerPositionX] = emptyField;
-                        inventory[i] = collectableSkin;
+                        map[playerPositionY, playerPositionX] = (char)MapField.Empty;
+                        inventory[i] = (char)InventoryCell.Coin;
                         break;
                     }
                 }
@@ -513,7 +507,7 @@ namespace Starting_lessons
         private static void ClearInventory(char[] inventory)
         {
             for (int i = 0; i < inventory.Length; i++)
-                inventory[i] = (char)InvetnoryCell.Empty;
+                inventory[i] = (char)InventoryCell.Empty;
         }
 
         private static void DrawMap(char[,] map)
@@ -535,7 +529,7 @@ namespace Starting_lessons
 
             for (int i = 0; i < array.GetLength(0); i++) 
                 for (int j = 0; j < array.GetLength(1); j++)
-                    if (array[i, j] == FieldChar)
+                    if (array[i, j] == fieldChar)
                         coint++;
 
             return coint;
@@ -550,9 +544,7 @@ namespace Starting_lessons
 
         private static void TryMove(char[,] map, int directionX, int directionY, ref int playerPositionX, ref int playerPositionY)
         {
-            char wall = '#';
-
-            if (map[playerPositionY + directionY, playerPositionX + directionX] != wall)
+            if (map[playerPositionY + directionY, playerPositionX + directionX] != (char)MapField.Wall)
             {
                 playerPositionX += directionX;
                 playerPositionY += directionY;
