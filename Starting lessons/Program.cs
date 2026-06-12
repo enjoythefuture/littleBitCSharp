@@ -32,6 +32,26 @@ namespace Starting_lessons
             Empty = '?',
             Coin = '$'
         }
+
+        enum RateMenuCommand
+        {
+            Yes,
+            No
+        }
+
+        enum Gender
+        {
+            Male = 1,
+            Female = 2
+        }
+
+        enum Race
+        {
+            Elf = 1,
+            Orc,
+            Robot,
+            Human
+        }
         private static void Main()
         {
 
@@ -183,11 +203,11 @@ namespace Starting_lessons
 
             //Данные о персонаже
             string name = "";
-            string race = "";
+            Race race = Race.Human;
             int age = 0;
             int experience = 0;
             int level = 0;
-            bool isMale = true;
+            Gender gender = Gender.Male;
             char skin = '@';
 
             //Характеристики персонажа
@@ -211,10 +231,15 @@ namespace Starting_lessons
                    $"{(int)MainMenuCommand.Exit}. Выход"
             };
 
-
+            string[] races =
+                {$"{Race.Human}", 
+                 $"{Race.Orc}",
+                 $"{Race.Elf}", 
+                 $"{Race.Robot}"};
 
             while (isWork)
             {
+
                 Console.Clear(); // Очистка консоли
                 Console.ForegroundColor = ConsoleColor.Green;
 
@@ -227,7 +252,7 @@ namespace Starting_lessons
                 {
                     case MainMenuCommand.FillDescription:
 
-                        FillCharacterDescription(out name, out age, out race, out experience, out level, out isMale);
+                        FillCharacterDescription(out name, out age, out race, out experience, out level, out gender);
 
                         break;
 
@@ -238,7 +263,6 @@ namespace Starting_lessons
                         break;
 
                     case MainMenuCommand.ShowInfo:
-                        string gender = isMale ? "Мужской" : "Женский";
 
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Информация о персонаже:");
@@ -314,16 +338,16 @@ namespace Starting_lessons
         //    тело метода
         //}
 
-        private static void FillCharacterDescription(out string name, out int age, out string race, out int experience, out int level, out bool isMale)
+        private static void FillCharacterDescription(out string name, out int age, out Race race, out int experience, out int level, out Gender gender)
         {
             int minNameLength = 3;
 
             name = ReadString("Введите имя персонажа: ", minNameLength);
-            race = ReadString("Введите рассу персонажа: ");
+            race = ReadRace("Введите рассу персонажа: ");
             age = ReadInt("Ввведите возраст персонажа: ");
             experience = ReadInt("Введите опыт персонажа: ");
             level = ReadInt("Введите уровень персонажа: ");
-            isMale = ReadGender("Введите пол персонажа: ");
+            gender = ReadGender("Введите пол персонажа: ");
         }
 
         private static void FillCharacteristic(out int strength, out int agility, out int intelegence, out int charisma)
@@ -388,31 +412,45 @@ namespace Starting_lessons
             Console.ResetColor();
         }
 
-        private static bool ReadGender(string message)
+        private static Gender ReadGender(string message)
         {
             bool isParseSuccess = true;
-            string maleGenderMark = "M";
-            string femaleGenderMark = "F";
-            string genderInput;
+            Gender genderInput;
 
             do
             {
-                Console.WriteLine($"Введите пол ({maleGenderMark}/{femaleGenderMark})");
-                genderInput = Console.ReadLine().ToUpper();
+                genderInput = (Gender)ReadInt($"Введите пол ({(int)Gender.Male} - M/{(int)Gender.Female} - F )");
 
-                if (genderInput == maleGenderMark)
-                    return true;
+                isParseSuccess = genderInput == Gender.Male || genderInput == Gender.Female;
 
-                else if (genderInput == femaleGenderMark)
-                    return false;
-                else
-                {
-                    isParseSuccess = false;
+                if (!isParseSuccess)
+                   PrintWarinngInvalidInput();
+
+            } while (!isParseSuccess);
+            return genderInput;
+        }
+        private static Race ReadRace(string message)
+        {
+            bool isParseSuccess = true;
+            Race raceInput;
+
+            do
+            {
+                Console.WriteLine("Выберите рассу персонажа: ");
+
+                //Сделать вывод перечисления всех расс, возможно не через массив строк?
+                //foreach (int i in races[]) 
+                //    Console.WriteLine(race[i]);
+
+                raceInput = (Race)ReadInt("Race");
+
+                isParseSuccess = raceInput == Race.Human || raceInput == Race.Orc || raceInput == Race.Robot || raceInput == Race.Elf; //сделать не так топорно
+
+                if (!isParseSuccess)
                     PrintWarinngInvalidInput();
 
-                }
             } while (!isParseSuccess);
-            return true;
+            return raceInput;
         }
 
         private static void Play(char skin)
