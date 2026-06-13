@@ -47,10 +47,11 @@ namespace Starting_lessons
 
         enum Race
         {
-            Elf = 1,
+            Human = 1,
+            Elf,
             Orc,
             Robot,
-            Human
+            
         }
         private static void Main()
         {
@@ -231,12 +232,6 @@ namespace Starting_lessons
                    $"{(int)MainMenuCommand.Exit}. Выход"
             };
 
-            string[] races =
-                {$"{Race.Human}", 
-                 $"{Race.Orc}",
-                 $"{Race.Elf}", 
-                 $"{Race.Robot}"};
-
             while (isWork)
             {
 
@@ -343,7 +338,7 @@ namespace Starting_lessons
             int minNameLength = 3;
 
             name = ReadString("Введите имя персонажа: ", minNameLength);
-            race = ReadRace("Введите рассу персонажа: ");
+            race = ReadRace("Выберете рассу персонажа: ");
             age = ReadInt("Ввведите возраст персонажа: ");
             experience = ReadInt("Введите опыт персонажа: ");
             level = ReadInt("Введите уровень персонажа: ");
@@ -431,20 +426,18 @@ namespace Starting_lessons
         }
         private static Race ReadRace(string message)
         {
+            string[] raceNames = Enum.GetNames(typeof(Race));
             bool isParseSuccess = true;
             Race raceInput;
 
             do
             {
-                Console.WriteLine("Выберите рассу персонажа: ");
+                for (int i = 0; i < raceNames.Length; i++)
+                    Console.WriteLine($"{i + 1}. {raceNames[i]} ");
 
-                //Сделать вывод перечисления всех расс, возможно не через массив строк?
-                //foreach (int i in races[]) 
-                //    Console.WriteLine(race[i]);
+                raceInput = (Race)ReadInt($"{message} ");
 
-                raceInput = (Race)ReadInt("Race");
-
-                isParseSuccess = raceInput == Race.Human || raceInput == Race.Orc || raceInput == Race.Robot || raceInput == Race.Elf; //сделать не так топорно
+                isParseSuccess = Enum.IsDefined(typeof(Race), raceInput);
 
                 if (!isParseSuccess)
                     PrintWarinngInvalidInput();
