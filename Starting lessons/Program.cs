@@ -485,9 +485,8 @@ namespace Starting_lessons
 
 
             int inventoryPositionY = map.GetLength(0) + 2;
-            char[] inventory = new char[GetCharCount(map, MapField.Coin)];
-            ClearInventory(inventory);
-
+            List<char> inventory = new List<char>();
+           
             DrawMap(map);
 
             while (isRun)
@@ -510,37 +509,25 @@ namespace Starting_lessons
 
         }
 
-        private static void TryCollect(char[,] map, int playerPositionX, int playerPositionY, MapField collectableSkin, char[] inventory)
+        private static void TryCollect(char[,] map, int playerPositionX, int playerPositionY, MapField collectableSkin, List<char> inventory)
         {
             if (map[playerPositionY, playerPositionX] == (char)collectableSkin)
-            {
-                for (int i = 0; i < inventory.Length; i++)
-                {
-                    if (inventory[i] == (char)InventoryCell.Empty)
-                    {
-                        map[playerPositionY, playerPositionX] = (char)MapField.Empty;
-                        inventory[i] = (char)InventoryCell.Coin;
-                        break;
-                    }
-                }
+            {           
+                map[playerPositionY, playerPositionX] = (char)MapField.Empty;
+                inventory.Add((char)(InventoryCell)collectableSkin);
             }
 
         }
 
-        private static void DrawInventory(char[] inventory, int inventoryPositionY)
+        private static void DrawInventory(List<char> inventory, int inventoryPositionY)
         {
             Console.SetCursorPosition(0, inventoryPositionY);
 
-            for (int i = 0; i < inventory.Length; i++) 
-                Console.Write(inventory[i] + " ");
+            foreach(char item in inventory)
+            {
+                Console.WriteLine(item + " ");
+            }
         }
-
-        private static void ClearInventory(char[] inventory)
-        {
-            for (int i = 0; i < inventory.Length; i++)
-                inventory[i] = (char)InventoryCell.Empty;
-        }
-
         private static void DrawMap(char[,] map)
         {
             for (int i = 0; i < map.GetLength(0); i++)
