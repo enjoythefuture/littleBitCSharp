@@ -223,6 +223,15 @@ namespace Starting_lessons
             string sure;
             int input;
 
+            Dictionary<Race, struing> RacesMenu;
+
+            name = ReadString("Введите имя персонажа: ", minNameLength);
+            race = ReadRace("Выберете рассу персонажа: ");
+            age = ReadInt("Ввведите возраст персонажа: ");
+            experience = ReadInt("Введите опыт персонажа: ");
+            level = ReadInt("Введите уровень персонажа: ");
+            gender = ReadGender("Введите пол персонажа: ");
+
             string[] commands = 
                   {$"{(int)MainMenuCommand.FillDescription}. Заполнить информацию о персонаже\n",
                    $"{(int)MainMenuCommand.FillCharacteristics}. Распределить характеристик\n",
@@ -337,12 +346,6 @@ namespace Starting_lessons
         {
             int minNameLength = 3;
 
-            name = ReadString("Введите имя персонажа: ", minNameLength);
-            race = ReadRace("Выберете рассу персонажа: ");
-            age = ReadInt("Ввведите возраст персонажа: ");
-            experience = ReadInt("Введите опыт персонажа: ");
-            level = ReadInt("Введите уровень персонажа: ");
-            gender = ReadGender("Введите пол персонажа: ");
         }
 
         private static void FillCharacteristic(out int strength, out int agility, out int intelegence, out int charisma)
@@ -596,6 +599,22 @@ namespace Starting_lessons
             }
         }
 
+        private static string GetRaceTitle(Race race)
+        {
+            switch (race)
+            {
+                case Race.Human:
+                    return "Человек";
+                case Race.Elf:
+                    return "Эльф";
+                case Race.Orc:
+                    return "Орк";
+                case Race.Robot:
+                    return "Робот";
+            }
+
+            return "Error!";
+        }
 
     }
 }
