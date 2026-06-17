@@ -223,7 +223,19 @@ namespace Starting_lessons
             string sure;
             int input;
 
-            Dictionary<Race, struing> RacesMenu;
+            Dictionary<Race, string> racesTitles = new Dictionary<Race, string>
+            {
+                [Race.Human] = "Человек",
+                [Race.Elf] = "Эльф",
+                [Race.Orc] = "Орк",
+                [Race.Robot] = "Робот"
+            };
+
+            Dictionary<Gender, string> genderTitles = new Dictionary<Gender, string>
+            {
+                [Gender.Male] = "Man",
+                [Gender.Female] = "Woman"
+            };
 
             name = ReadString("Введите имя персонажа: ", minNameLength);
             race = ReadRace("Выберете рассу персонажа: ");
@@ -345,6 +357,8 @@ namespace Starting_lessons
         private static void FillCharacterDescription(out string name, out int age, out Race race, out int experience, out int level, out Gender gender)
         {
             int minNameLength = 3;
+            string racesTitle = ;
+            string genderTitle = ;
 
         }
 
@@ -597,23 +611,6 @@ namespace Starting_lessons
                     directionX = 1;
                 break;
             }
-        }
-
-        private static string GetRaceTitle(Race race)
-        {
-            switch (race)
-            {
-                case Race.Human:
-                    return "Человек";
-                case Race.Elf:
-                    return "Эльф";
-                case Race.Orc:
-                    return "Орк";
-                case Race.Robot:
-                    return "Робот";
-            }
-
-            return "Error!";
         }
 
     }
