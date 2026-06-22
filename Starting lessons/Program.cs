@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,55 +9,53 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Starting_lessons
 {
+    public enum MainMenuCommand
+    {
+        Exit,
+        FillDescription,
+        FillCharacteristics,
+        ShowInfo,
+        RateUs,
+        Play
+    }
+
+    public enum MapField
+    {
+        Empty = ' ',
+        Wall = '#',
+        Coin = '$'
+    }
+    public enum InventoryCell
+    {
+        Empty = '?',
+        Coin = '$'
+    }
+
+    public enum RateMenuCommand
+    {
+        Yes,
+        No
+    }
+
+    public enum Gender
+    {
+        Male = 1,
+        Female = 2
+    }
+
+    public enum Race
+    {
+        Human = 1,
+        Elf,
+        Orc,
+        Robot,
+
+    }
 
     internal class Program
     {
-        enum MainMenuCommand
-        {
-            Exit,
-            FillDescription,
-            FillCharacteristics,
-            ShowInfo,
-            RateUs,
-            Play
-        }
-
-        enum MapField
-        {
-            Empty = ' ',
-            Wall = '#',
-            Coin = '$'
-        }
-        enum InventoryCell
-        {
-            Empty = '?',
-            Coin = '$'
-        }
-
-        enum RateMenuCommand
-        {
-            Yes,
-            No
-        }
-
-        enum Gender
-        {
-            Male = 1,
-            Female = 2
-        }
-
-        enum Race
-        {
-            Human = 1,
-            Elf,
-            Orc,
-            Robot,
-            
-        }
         private static void Main()
         {
-
-            //  Константы для команд меню
 
             #region Hello world
             // Программа 1 - Привет МИР    
@@ -199,25 +198,9 @@ namespace Starting_lessons
             //        Console.WriteLine("Продолжай искать...");
             //    }
             //}
+            #endregion
 
-            //Создаём меню для игры
-
-            //Данные о персонаже
-            string name = "";
-            Race race = Race.Human;
-            int age = 0;
-            int experience = 0;
-            int level = 0;
-            Gender gender = Gender.Male;
-            char skin = '@';
-
-            //Характеристики персонажа
-            int strength = 10;
-            int agility = 12;
-            int intelegence = 18;
-            int charisma = 20;
-
-            int maxPoints = 50;
+            Player player = new Player();
 
             bool isWork = true;
             string sure;
@@ -236,8 +219,6 @@ namespace Starting_lessons
                 [Gender.Male] = "Man",
                 [Gender.Female] = "Woman"
             };
-
-
 
             string[] commands = 
                   {$"{(int)MainMenuCommand.FillDescription}. Заполнить информацию о персонаже\n",
@@ -263,13 +244,13 @@ namespace Starting_lessons
                 {
                     case MainMenuCommand.FillDescription:
 
-                        FillCharacterDescription(out name, out age, out race, out experience, out level, out gender, racesTitles, genderTitles);
+                        FillCharacterDescription(player, racesTitles, genderTitles);
 
                         break;
 
                     case MainMenuCommand.FillCharacteristics:
 
-                        FillCharacteristic(out strength, out agility, out intelegence, out charisma);
+                        FillCharacteristic(player);
 
                         break;
 
@@ -278,22 +259,22 @@ namespace Starting_lessons
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Информация о персонаже:");
                         Console.WriteLine(
-                            $"Имя: {name}\n" +
-                            $"Возраст: {age}\n" +
-                            $"Расса: {race}\n" +
-                            $"Опыт: {experience}\n" +
-                            $"Уровень: {level}\n" +
-                            $"Пол: {gender}\n"
+                            $"Имя: {player.Name}\n" +
+                            $"Возраст: {player.Age}\n" +
+                            $"Расса: {player.Race}\n" +
+                            $"Опыт: {player.Experience}\n" +
+                            $"Уровень: {player.Level}\n" +
+                            $"Пол: {player.Gender}\n"
 
                         );
 
                         Console.ForegroundColor = ConsoleColor.Magenta;
                         Console.WriteLine("Характеристики персонажа:");
-                        Console.WriteLine($"Сила: {strength}\n" +
-                            $"Ловкость: {agility}\n" +
-                            $"Интеллект: {intelegence}\n" +
-                            $"Харизма: {charisma}\n" +
-                            $"Очки персонажа: {maxPoints}\n"
+                        Console.WriteLine($"Сила: {player.Strength}\n" +
+                            $"Ловкость: {player.Agility}\n" +
+                            $"Интеллект: {player.Intelegence}\n" +
+                            $"Харизма: {player.Charisma}\n" +
+                            $"Очки персонажа: {player.MaxPoints}\n"
                         );
                         break;
 
@@ -305,7 +286,7 @@ namespace Starting_lessons
 
                     case MainMenuCommand.Play:
 
-                        Play(skin);
+                        Play(player.Skin);
 
                     break;
 
@@ -340,7 +321,6 @@ namespace Starting_lessons
             // for (инициализация; условие; итерация) { тело цикла } - выполняет тело цикла, пока условие истинно. Инициализация выполняется один раз в начале, итерация выполняется после каждого выполнения тела цикла. Чаще всего используется для перебора элементов массива или коллекции
             // Пока не добавляю использование for, практика будет в массивах. На данный момент перехожу в "методы"
 
-            #endregion
         }
 
         //Метод:
@@ -349,8 +329,7 @@ namespace Starting_lessons
         //    тело метода
         //}
 
-        private static void FillCharacterDescription(out string name, out int age, out Race race, out int experience, out int level, out Gender gender, 
-                                                                            Dictionary<Race, string> racesTitles, Dictionary<Gender, string> genderTitles)
+        private static void FillCharacterDescription(Player player, Dictionary<Race, string> racesTitles, Dictionary<Gender, string> genderTitles)
         {
             int minNameLength = 3;
             int tempMenuIndex = 0;
@@ -365,22 +344,22 @@ namespace Starting_lessons
             foreach (var genderPair in genderTitles)
                 gendersMenu[tempMenuIndex++] = $"{(int)genderPair.Key} - {genderPair.Value}";
 
-            name = ReadString("Введите имя персонажа: ", minNameLength);
-            race = ReadRace("Выберете рассу персонажа: ");
-            age = ReadInt("Ввведите возраст персонажа: ");
-            experience = ReadInt("Введите опыт персонажа: ");
-            level = ReadInt("Введите уровень персонажа: ");
-            gender = ReadGender("Введите пол персонажа: ");
+            player.Name = ReadString("Введите имя персонажа: ", minNameLength);
+            player.Race = ReadRace("Выберете рассу персонажа: ");
+            player.Age = ReadInt("Ввведите возраст персонажа: ");
+            player.Experience = ReadInt("Введите опыт персонажа: ");
+            player.Level = ReadInt("Введите уровень персонажа: ");
+            player.Gender = ReadGender("Введите пол персонажа: ");
 
 
         }
 
-        private static void FillCharacteristic(out int strength, out int agility, out int intelegence, out int charisma)
+        private static void FillCharacteristic(Player player)
         {
-            strength = ReadInt("Введите силу персонажа: ");
-            agility = ReadInt("Введите ловкость персонажа: ");
-            intelegence = ReadInt("Введите интеллект персонажа: ");
-            charisma = ReadInt("Введите харизму персонажа: ");
+            player.Strength = ReadInt("Введите силу персонажа: ");
+            player.Agility = ReadInt("Введите ловкость персонажа: ");
+            player.Intelegence = ReadInt("Введите интеллект персонажа: ");
+            player.Charisma = ReadInt("Введите харизму персонажа: ");
 
         }
 
@@ -613,5 +592,21 @@ namespace Starting_lessons
             }
         }
 
+    }
+
+    class Player
+    {
+        public string Name = "";
+        public Race Race = Race.Human;
+        public int Age = 0;
+        public int Experience = 0;
+        public int Level = 0;
+        public Gender Gender = Gender.Male;
+        public char Skin = '@';
+        public int Strength = 10;
+        public int Agility = 12;
+        public int Intelegence = 18;
+        public int Charisma = 20;
+        public int MaxPoints = 50;
     }
 }
