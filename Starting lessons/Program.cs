@@ -237,12 +237,7 @@ namespace Starting_lessons
                 [Gender.Female] = "Woman"
             };
 
-            name = ReadString("Введите имя персонажа: ", minNameLength);
-            race = ReadRace("Выберете рассу персонажа: ");
-            age = ReadInt("Ввведите возраст персонажа: ");
-            experience = ReadInt("Введите опыт персонажа: ");
-            level = ReadInt("Введите уровень персонажа: ");
-            gender = ReadGender("Введите пол персонажа: ");
+
 
             string[] commands = 
                   {$"{(int)MainMenuCommand.FillDescription}. Заполнить информацию о персонаже\n",
@@ -268,7 +263,7 @@ namespace Starting_lessons
                 {
                     case MainMenuCommand.FillDescription:
 
-                        FillCharacterDescription(out name, out age, out race, out experience, out level, out gender);
+                        FillCharacterDescription(out name, out age, out race, out experience, out level, out gender, racesTitles, genderTitles);
 
                         break;
 
@@ -354,11 +349,29 @@ namespace Starting_lessons
         //    тело метода
         //}
 
-        private static void FillCharacterDescription(out string name, out int age, out Race race, out int experience, out int level, out Gender gender)
+        private static void FillCharacterDescription(out string name, out int age, out Race race, out int experience, out int level, out Gender gender, 
+                                                                            Dictionary<Race, string> racesTitles, Dictionary<Gender, string> genderTitles)
         {
             int minNameLength = 3;
-            string racesTitle = ;
-            string genderTitle = ;
+            int tempMenuIndex = 0;
+            string[] racesMenu = new string[racesTitles.Count];
+            string[] gendersMenu = new string[genderTitles.Count];
+
+            foreach (var racePair in racesTitles)
+                racesMenu[tempMenuIndex++] = $"{(int)racePair.Key} - {racePair.Value}";
+
+            tempMenuIndex = 0;
+
+            foreach (var genderPair in genderTitles)
+                gendersMenu[tempMenuIndex++] = $"{(int)genderPair.Key} - {genderPair.Value}";
+
+            name = ReadString("Введите имя персонажа: ", minNameLength);
+            race = ReadRace("Выберете рассу персонажа: ");
+            age = ReadInt("Ввведите возраст персонажа: ");
+            experience = ReadInt("Введите опыт персонажа: ");
+            level = ReadInt("Введите уровень персонажа: ");
+            gender = ReadGender("Введите пол персонажа: ");
+
 
         }
 
@@ -555,19 +568,6 @@ namespace Starting_lessons
                 }
                 Console.WriteLine();
             }
-        }
-
-        private static int GetCharCount(char[,] array, MapField field)
-        {
-            int coint = 0;
-            char fieldChar = (char)field;
-
-            for (int i = 0; i < array.GetLength(0); i++) 
-                for (int j = 0; j < array.GetLength(1); j++)
-                    if (array[i, j] == fieldChar)
-                        coint++;
-
-            return coint;
         }
 
         private static void DrawSymbol(char symbol, int positionX, int positionY)
