@@ -201,6 +201,7 @@ namespace Starting_lessons
             #endregion
 
             Player player = new Player();
+            InputReader inputReader = new InputReader();
 
             bool isWork = true;
             string sure;
@@ -238,19 +239,19 @@ namespace Starting_lessons
                 ShowMenu(commands);
 
                 Console.Write("Выберите пункт меню (введите номер команды) \n");
-                input = ReadInt("Введите номер команды ", -1);
+                input = inputReader.ReadInt("Введите номер команды ", -1);
 
                 switch ((MainMenuCommand)input)
                 {
                     case MainMenuCommand.FillDescription:
 
-                        FillCharacterDescription(player, racesTitles, genderTitles);
+                        FillCharacterDescription(player, inputReader, racesTitles, genderTitles);
 
                         break;
 
                     case MainMenuCommand.FillCharacteristics:
 
-                        FillCharacteristic(player);
+                        FillCharacteristic(player, inputReader);
 
                         break;
 
@@ -329,7 +330,7 @@ namespace Starting_lessons
         //    тело метода
         //}
 
-        private static void FillCharacterDescription(Player player, Dictionary<Race, string> racesTitles, Dictionary<Gender, string> genderTitles)
+        private static void FillCharacterDescription(Player player, InputReader inputReader, Dictionary<Race, string> racesTitles, Dictionary<Gender, string> genderTitles)
         {
             int minNameLength = 3;
             int tempMenuIndex = 0;
@@ -344,22 +345,22 @@ namespace Starting_lessons
             foreach (var genderPair in genderTitles)
                 gendersMenu[tempMenuIndex++] = $"{(int)genderPair.Key} - {genderPair.Value}";
 
-            player.Name = ReadString("Введите имя персонажа: ", minNameLength);
+            player.Name = inputReader.ReadString("Введите имя персонажа: ", minNameLength);
             player.Race = ReadRace("Выберете рассу персонажа: ");
-            player.Age = ReadInt("Ввведите возраст персонажа: ");
-            player.Experience = ReadInt("Введите опыт персонажа: ");
-            player.Level = ReadInt("Введите уровень персонажа: ");
+            player.Age = inputReader.ReadInt("Ввведите возраст персонажа: ");
+            player.Experience = inputReader.ReadInt("Введите опыт персонажа: ");
+            player.Level = inputReader.ReadInt("Введите уровень персонажа: ");
             player.Gender = ReadGender("Введите пол персонажа: ");
 
 
         }
 
-        private static void FillCharacteristic(Player player)
+        private static void FillCharacteristic(Player player, InputReader inputReader)
         {
-            player.Strength = ReadInt("Введите силу персонажа: ");
-            player.Agility = ReadInt("Введите ловкость персонажа: ");
-            player.Intelegence = ReadInt("Введите интеллект персонажа: ");
-            player.Charisma = ReadInt("Введите харизму персонажа: ");
+            player.Strength = inputReader.ReadInt("Введите силу персонажа: ");
+            player.Agility = inputReader.ReadInt("Введите ловкость персонажа: ");
+            player.Intelegence = inputReader.ReadInt("Введите интеллект персонажа: ");
+            player.Charisma = inputReader.ReadInt("Введите харизму персонажа: ");
 
         }
 
@@ -372,68 +373,24 @@ namespace Starting_lessons
             }
         }
 
-        private static string ReadString(string message, int minLength = 0)
-        {
-            string value;
-            bool isParseSuccess;
-
-            do
-            {
-                Console.Write(message);
-                value = Console.ReadLine();
-                isParseSuccess = string.IsNullOrWhiteSpace(value) == false && value.Length >= minLength;
-
-                if (!isParseSuccess)
-                    PrintWarinngInvalidInput();
-            } while (!isParseSuccess);
-
-            return value;
-        }
-
-        private static int ReadInt(string message, int minValue = 0)
-        {
-            int value;
-            bool isParseSuccess;
-
-            do
-            {
-                Console.Write(message);
-                isParseSuccess = int.TryParse(Console.ReadLine(), out value) && value > minValue;
-
-                if (!isParseSuccess)
-                {
-                    PrintWarinngInvalidInput();
-                }
-            } while (!isParseSuccess);
-
-            return value;
-        }
-
-        private static void PrintWarinngInvalidInput()
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Некорректный ввод");
-            Console.ResetColor();
-        }
-
-        private static Gender ReadGender(string message)
+        private static Gender ReadGender(string message, InputReader inputReader)
         {
             bool isParseSuccess = true;
             Gender genderInput;
 
             do
             {
-                genderInput = (Gender)ReadInt($"Введите пол ({(int)Gender.Male} - M/{(int)Gender.Female} - F )");
+                genderInput = (Gender)inputReader.ReadInt($"Введите пол ({(int)Gender.Male} - M/{(int)Gender.Female} - F )");
 
                 isParseSuccess = genderInput == Gender.Male || genderInput == Gender.Female;
 
                 if (!isParseSuccess)
-                   PrintWarinngInvalidInput();
+                   inputReader.PrintWarinngInvalidInput();
 
             } while (!isParseSuccess);
             return genderInput;
         }
-        private static Race ReadRace(string message)
+        private static Race ReadRace(string message, InputReader inputReader)
         {
             string[] raceNames = Enum.GetNames(typeof(Race));
             bool isParseSuccess = true;
@@ -444,12 +401,12 @@ namespace Starting_lessons
                 for (int i = 0; i < raceNames.Length; i++)
                     Console.WriteLine($"{i + 1}. {raceNames[i]} ");
 
-                raceInput = (Race)ReadInt($"{message} ");
+                raceInput = (Race)inputReader.ReadInt($"{message} ");
 
                 isParseSuccess = Enum.IsDefined(typeof(Race), raceInput);
 
                 if (!isParseSuccess)
-                    PrintWarinngInvalidInput();
+                    inputReader.PrintWarinngInvalidInput();
 
             } while (!isParseSuccess);
             return raceInput;
@@ -608,5 +565,52 @@ namespace Starting_lessons
         public int Intelegence = 18;
         public int Charisma = 20;
         public int MaxPoints = 50;
+    }
+
+    class InputReader
+    {
+        public string ReadString(string message, int minLength = 0)
+        {
+            string value;
+            bool isParseSuccess;
+
+            do
+            {
+                Console.Write(message);
+                value = Console.ReadLine();
+                isParseSuccess = string.IsNullOrWhiteSpace(value) == false && value.Length >= minLength;
+
+                if (!isParseSuccess)
+                    PrintWarinngInvalidInput();
+            } while (!isParseSuccess);
+
+            return value;
+        }
+
+        public int ReadInt(string message, int minValue = 0)
+        {
+            int value;
+            bool isParseSuccess;
+
+            do
+            {
+                Console.Write(message);
+                isParseSuccess = int.TryParse(Console.ReadLine(), out value) && value > minValue;
+
+                if (!isParseSuccess)
+                {
+                    PrintWarinngInvalidInput();
+                }
+            } while (!isParseSuccess);
+
+            return value;
+        }
+
+        public void PrintWarinngInvalidInput()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Некорректный ввод");
+            Console.ResetColor();
+        }
     }
 }
