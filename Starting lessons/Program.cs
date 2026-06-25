@@ -346,11 +346,11 @@ namespace Starting_lessons
                 gendersMenu[tempMenuIndex++] = $"{(int)genderPair.Key} - {genderPair.Value}";
 
             player.Name = inputReader.ReadString("Введите имя персонажа: ", minNameLength);
-            player.Race = ReadRace("Выберете рассу персонажа: ");
+            player.Race = ReadRace("Выберете рассу персонажа: ", inputReader);
             player.Age = inputReader.ReadInt("Ввведите возраст персонажа: ");
             player.Experience = inputReader.ReadInt("Введите опыт персонажа: ");
             player.Level = inputReader.ReadInt("Введите уровень персонажа: ");
-            player.Gender = ReadGender("Введите пол персонажа: ");
+            player.Gender = ReadGender("Введите пол персонажа: ", inputReader );
 
 
         }
